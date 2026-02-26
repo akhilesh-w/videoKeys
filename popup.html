@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VideoKeys</title>
   <link rel="stylesheet" href="popup.css">
 </head>
+
 <body>
   <div class="popup">
     <!-- Header -->
@@ -45,30 +47,72 @@
         <span class="chevron" id="chevron">▾</span>
       </button>
       <div class="shortcuts-list" id="shortcutsList">
-        <div class="shortcut-group">
-          <h3>Playback</h3>
-          <div class="shortcut"><kbd>Space</kbd> / <kbd>K</kbd> <span>Play / Pause</span></div>
-          <div class="shortcut"><kbd>J</kbd> <span>Rewind 10s</span></div>
-          <div class="shortcut"><kbd>L</kbd> <span>Forward 10s</span></div>
-          <div class="shortcut"><kbd>←</kbd> / <kbd>→</kbd> <span>Seek ±5s</span></div>
-          <div class="shortcut"><kbd>0</kbd>–<kbd>9</kbd> <span>Seek to %</span></div>
-        </div>
-        <div class="shortcut-group">
-          <h3>Audio & Speed</h3>
-          <div class="shortcut"><kbd>↑</kbd> / <kbd>↓</kbd> <span>Volume ±5%</span></div>
-          <div class="shortcut"><kbd>M</kbd> <span>Mute / Unmute</span></div>
-          <div class="shortcut"><kbd>Shift</kbd>+<kbd>></kbd> <span>Speed up</span></div>
-          <div class="shortcut"><kbd>Shift</kbd>+<kbd><</kbd> <span>Slow down</span></div>
-        </div>
-        <div class="shortcut-group">
-          <h3>Other</h3>
-          <div class="shortcut"><kbd>F</kbd> <span>Fullscreen</span></div>
-          <div class="shortcut"><kbd>,</kbd> / <kbd>.</kbd> <span>Frame step (paused)</span></div>
-        </div>
+        <table class="shortcuts-table">
+          <tbody>
+            <tr class="group-header">
+              <td colspan="2">Playback</td>
+            </tr>
+            <tr>
+              <td><kbd>K</kbd> <span class="or">or</span> <kbd>Space</kbd></td>
+              <td>Play / Pause</td>
+            </tr>
+            <tr>
+              <td><kbd>J</kbd></td>
+              <td>Rewind 10s</td>
+            </tr>
+            <tr>
+              <td><kbd>L</kbd></td>
+              <td>Forward 10s</td>
+            </tr>
+            <tr>
+              <td><kbd>←</kbd> <kbd>→</kbd></td>
+              <td>Seek ±5s</td>
+            </tr>
+            <tr>
+              <td><kbd>0</kbd> — <kbd>9</kbd></td>
+              <td>Jump to 0–90%</td>
+            </tr>
+
+            <tr class="group-header">
+              <td colspan="2">Audio & Speed</td>
+            </tr>
+            <tr>
+              <td><kbd>↑</kbd> <kbd>↓</kbd></td>
+              <td>Volume ±5%</td>
+            </tr>
+            <tr>
+              <td><kbd>M</kbd></td>
+              <td>Mute / Unmute</td>
+            </tr>
+            <tr>
+              <td><kbd>⇧</kbd><kbd>></kbd></td>
+              <td>Speed up</td>
+            </tr>
+            <tr>
+              <td><kbd>⇧</kbd><kbd>
+                  << /kbd>
+              </td>
+              <td>Slow down</td>
+            </tr>
+
+            <tr class="group-header">
+              <td colspan="2">Other</td>
+            </tr>
+            <tr>
+              <td><kbd>F</kbd></td>
+              <td>Fullscreen</td>
+            </tr>
+            <tr>
+              <td><kbd>,</kbd> <kbd>.</kbd></td>
+              <td>Frame step (paused)</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
   <script src="popup.js"></script>
 </body>
+
 </html>

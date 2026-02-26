@@ -40,17 +40,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // Try to get video count from content script
             try {
-                await chrome.tabs.sendMessage(tab.id, { type: 'QUERY_VIDEOS' });
-                // Listen for response
-                chrome.runtime.onMessage.addListener((msg) => {
-                    if (msg.type === 'VIDEO_COUNT') {
-                        if (msg.count > 0) {
-                            statusIcon.textContent = '●';
-                            statusIcon.classList.add('active');
-                            statusText.textContent = `${msg.count} video${msg.count > 1 ? 's' : ''} detected`;
-                        }
-                    }
-                });
+                const response = await chrome.tabs.sendMessage(tab.id, { type: 'QUERY_VIDEOS' });
+                if (response && response.count > 0) {
+                    statusIcon.textContent = '●';
+                    statusIcon.classList.add('active');
+                    statusText.textContent = `${response.count} video${response.count > 1 ? 's' : ''} detected`;
+                }
             } catch {
                 // Content script not loaded on this page
             }

@@ -361,16 +361,17 @@
     });
 
     // Listen for state changes
-    chrome.runtime.onMessage.addListener((message) => {
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.type === 'STATE_CHANGED') {
             enabled = message.enabled;
         }
         if (message.type === 'QUERY_VIDEOS') {
-            chrome.runtime.sendMessage({
-                type: 'VIDEO_COUNT',
+            findAllVideos();
+            sendResponse({
                 count: allVideos.length,
                 hasActive: !!activeVideo,
             });
         }
+        return true;
     });
 })();
