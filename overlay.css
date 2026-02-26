@@ -1,0 +1,100 @@
+/* VideoKeys — Feedback Overlay */
+
+.vk-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  pointer-events: none;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.vk-overlay.vk-show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.vk-overlay.vk-fade {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1.05);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.vk-overlay-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.vk-overlay-text {
+  line-height: 1;
+}
+
+/* Progress bar for seek operations */
+.vk-progress-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.vk-overlay.vk-show .vk-progress-wrap {
+  opacity: 1;
+}
+
+.vk-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+  border-radius: 0 0 10px 10px;
+  transition: width 0.15s ease;
+}
+
+/* Volume bar variant */
+.vk-volume-bar {
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vk-volume-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+  border-radius: 2px;
+  transition: width 0.1s ease;
+}
+
+/* Speed indicator pill */
+.vk-speed-pill {
+  padding: 2px 8px;
+  background: rgba(99, 102, 241, 0.3);
+  border: 1px solid rgba(99, 102, 241, 0.5);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #a5b4fc;
+}

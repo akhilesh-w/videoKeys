@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VideoKeys</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <img src="icons/icon48.png" class="logo" alt="VideoKeys">
+        <div class="header-text">
+          <h1>VideoKeys</h1>
+          <p class="subtitle">YouTube shortcuts everywhere</p>
+        </div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="globalToggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <!-- Site toggle -->
+    <div class="site-row" id="siteRow">
+      <div class="site-info">
+        <span class="site-dot" id="siteDot"></span>
+        <span class="site-name" id="siteName">—</span>
+      </div>
+      <button class="site-toggle-btn" id="siteToggle">Enabled</button>
+    </div>
+
+    <!-- Video status -->
+    <div class="status-row" id="statusRow">
+      <span class="status-icon" id="statusIcon">○</span>
+      <span class="status-text" id="statusText">No videos detected</span>
+    </div>
+
+    <!-- Shortcuts reference -->
+    <div class="shortcuts-section">
+      <button class="shortcuts-toggle" id="shortcutsToggle">
+        <span>Keyboard Shortcuts</span>
+        <span class="chevron" id="chevron">▾</span>
+      </button>
+      <div class="shortcuts-list" id="shortcutsList">
+        <div class="shortcut-group">
+          <h3>Playback</h3>
+          <div class="shortcut"><kbd>Space</kbd> / <kbd>K</kbd> <span>Play / Pause</span></div>
+          <div class="shortcut"><kbd>J</kbd> <span>Rewind 10s</span></div>
+          <div class="shortcut"><kbd>L</kbd> <span>Forward 10s</span></div>
+          <div class="shortcut"><kbd>←</kbd> / <kbd>→</kbd> <span>Seek ±5s</span></div>
+          <div class="shortcut"><kbd>0</kbd>–<kbd>9</kbd> <span>Seek to %</span></div>
+        </div>
+        <div class="shortcut-group">
+          <h3>Audio & Speed</h3>
+          <div class="shortcut"><kbd>↑</kbd> / <kbd>↓</kbd> <span>Volume ±5%</span></div>
+          <div class="shortcut"><kbd>M</kbd> <span>Mute / Unmute</span></div>
+          <div class="shortcut"><kbd>Shift</kbd>+<kbd>></kbd> <span>Speed up</span></div>
+          <div class="shortcut"><kbd>Shift</kbd>+<kbd><</kbd> <span>Slow down</span></div>
+        </div>
+        <div class="shortcut-group">
+          <h3>Other</h3>
+          <div class="shortcut"><kbd>F</kbd> <span>Fullscreen</span></div>
+          <div class="shortcut"><kbd>,</kbd> / <kbd>.</kbd> <span>Frame step (paused)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
