@@ -110,7 +110,21 @@
 
     // ─── Overlay Feedback ───────────────────────────────────
 
+    function ensureOverlayPositioning(container) {
+        if (!container) return null;
+        const style = window.getComputedStyle(container);
+        if (style.position === 'static') {
+            container.style.position = 'relative';
+        }
+        return container;
+    }
+
     function getVideoContainer(video) {
+        const fullscreenHost = document.fullscreenElement;
+        if (fullscreenHost && (fullscreenHost === video || fullscreenHost.contains(video))) {
+            return ensureOverlayPositioning(fullscreenHost);
+        }
+
         // Find a positioned parent or create a wrapper
         let container = video.parentElement;
         while (container && container !== document.body) {
@@ -120,16 +134,14 @@
                 style.position === 'absolute' ||
                 style.position === 'fixed'
             ) {
-                return container;
+                return ensureOverlayPositioning(container);
             }
             container = container.parentElement;
         }
+
         // Fallback: use the video's direct parent and make it relative
         const parent = video.parentElement;
-        if (parent) {
-            parent.style.position = 'relative';
-        }
-        return parent;
+        return ensureOverlayPositioning(parent);
     }
 
     function showOverlay(video, icon, text, extra) {
@@ -172,6 +184,12 @@
 
     function speedPill(rate) {
         return `<span class="vk-speed-pill">${rate}x</span>`;
+    }
+
+    function progressBar(video) {
+        if (!video.duration || !isFinite(video.duration) || video.duration <= 0) return '';
+        const pct = Math.max(0, Math.min(100, (video.currentTime / video.duration) * 100));
+        return `<div class="vk-progress-wrap"><div class="vk-progress-bar" style="width:${pct}%"></div></div>`;
     }
 
     // ─── Input Guard ────────────────────────────────────────
@@ -221,7 +239,7 @@
             case 'j':
             case 'J': {
                 video.currentTime = Math.max(0, video.currentTime - 10);
-                showOverlay(video, '⏪', '-10s');
+                showOverlay(video, '⏪', '-10s', progressBar(video));
                 handled = true;
                 break;
             }
@@ -229,21 +247,21 @@
             case 'l':
             case 'L': {
                 video.currentTime = Math.min(video.duration || Infinity, video.currentTime + 10);
-                showOverlay(video, '⏩', '+10s');
+                showOverlay(video, '⏩', '+10s', progressBar(video));
                 handled = true;
                 break;
             }
 
             case 'ArrowLeft': {
                 video.currentTime = Math.max(0, video.currentTime - 5);
-                showOverlay(video, '⏪', '-5s');
+                showOverlay(video, '⏪', '-5s', progressBar(video));
                 handled = true;
                 break;
             }
 
             case 'ArrowRight': {
                 video.currentTime = Math.min(video.duration || Infinity, video.currentTime + 5);
-                showOverlay(video, '⏩', '+5s');
+                showOverlay(video, '⏩', '+5s', progressBar(video));
                 handled = true;
                 break;
             }
@@ -332,7 +350,7 @@
                     const pct = parseInt(key) / 10;
                     if (video.duration && isFinite(video.duration)) {
                         video.currentTime = video.duration * pct;
-                        showOverlay(video, '⏭', `${parseInt(key) * 10}%`);
+                        showOverlay(video, '⏭', `${parseInt(key) * 10}%`, progressBar(video));
                         handled = true;
                     }
                 }
