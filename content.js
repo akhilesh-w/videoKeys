@@ -144,6 +144,68 @@
         return ensureOverlayPositioning(parent);
     }
 
+    function isVisibleElement(el) {
+        if (!(el instanceof HTMLElement)) return false;
+        const style = window.getComputedStyle(el);
+        if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
+            return false;
+        }
+        const rect = el.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0;
+    }
+
+    function hasLikelyPlayerControls(container, video) {
+        const selectors = [
+            'button',
+            '[role="button"]',
+            'input[type="range"]',
+            '[aria-label*="play" i]',
+            '[aria-label*="pause" i]',
+            '[aria-label*="seek" i]',
+            '[aria-label*="progress" i]',
+            '[class*="control" i]',
+            '[class*="progress" i]',
+            '[class*="seek" i]',
+            '[class*="scrub" i]',
+            '[class*="timeline" i]',
+            '[class*="player" i]'
+        ];
+
+        return Array.from(container.querySelectorAll(selectors.join(','))).some(
+            (el) => el !== video && isVisibleElement(el)
+        );
+    }
+
+    function getFullscreenTarget(video) {
+        const videoRect = video.getBoundingClientRect();
+        const viewportArea = window.innerWidth * window.innerHeight;
+        let candidate = video;
+        let current = video.parentElement;
+
+        while (current && current !== document.body) {
+            if (!(current instanceof HTMLElement)) break;
+
+            const rect = current.getBoundingClientRect();
+            const containsVideo =
+                rect.width >= videoRect.width &&
+                rect.height >= videoRect.height &&
+                Math.abs(rect.left - videoRect.left) < Math.max(24, videoRect.width * 0.1) &&
+                Math.abs(rect.top - videoRect.top) < Math.max(24, videoRect.height * 0.1);
+            const reasonablySized = rect.width * rect.height <= viewportArea * 1.5;
+
+            if (containsVideo && reasonablySized) {
+                candidate = current;
+                if (hasLikelyPlayerControls(current, video)) {
+                    return current;
+                }
+            }
+
+            current = current.parentElement;
+        }
+
+        return candidate;
+    }
+
     function showOverlay(video, icon, text, extra) {
         const container = getVideoContainer(video);
         if (!container) return;
@@ -295,7 +357,8 @@
                     document.exitFullscreen();
                     showOverlay(video, '⛶', 'Exit Fullscreen');
                 } else {
-                    (video.parentElement || video).requestFullscreen().catch(() => {
+                    const fullscreenTarget = getFullscreenTarget(video);
+                    fullscreenTarget.requestFullscreen().catch(() => {
                         video.requestFullscreen().catch(() => { });
                     });
                     showOverlay(video, '⛶', 'Fullscreen');
